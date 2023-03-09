@@ -4,6 +4,9 @@
 	background: $secondary-color;
 	cursor: pointer;
 	transition: all 0.3s;
+	min-height: 450px;
+	height: 100%;
+	margin: 10px;
 
 	&:hover {
 		transform: scale(1.1);
@@ -12,7 +15,7 @@
 }
 
 .card-top {
-	height: 300px;
+	height: 320px;
 
 	img {
 		width: 100%;
@@ -21,15 +24,20 @@
 }
 
 .card-bottom {
-	padding: 20px;
+	padding: 15px;
 }
 
 .card-info {
 	color: $font-primary;
 
 	h4 {
-		font-size: 25px;
+		font-size: 20px;
 		font-weight: 400;
 		margin-bottom: 10px;
+	}
+
+	p {
+		font-size: 12px;
+		color: $font-secondary;
 	}
 }

@@ -4,10 +4,9 @@ import { APIKey } from "../../common/apis/movieApiKey";
 
 export const fetchAsyncMovies = createAsyncThunk(
 	"movies/fetchAsyncMovies",
-	async () => {
-		const movieText = "Lord";
+	async (term) => {
 		const response = await movieApi.get(
-			`?apiKey=${APIKey}&s=${movieText}&type=movie`
+			`?apiKey=${APIKey}&s=${term}&type=movie`
 		);
 		return response.data;
 	}
@@ -15,10 +14,9 @@ export const fetchAsyncMovies = createAsyncThunk(
 
 export const fetchAsyncShows = createAsyncThunk(
 	"shows/fetchAsyncShows",
-	async () => {
-		const seriesText = "Game";
+	async (term) => {
 		const response = await movieApi.get(
-			`?apiKey=${APIKey}&s=${seriesText}&type=series`
+			`?apiKey=${APIKey}&s=${term}&type=series`
 		);
 		return response.data;
 	}
@@ -36,6 +34,7 @@ const initialState = {
 	movies: {},
 	shows: {},
 	selectedMovieOrShow: {},
+	isLoading: false,
 };
 
 const movieSlice = createSlice({
@@ -48,11 +47,13 @@ const movieSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder
-			.addCase(fetchAsyncMovies.pending, () => {
+			.addCase(fetchAsyncMovies.pending, (state) => {
+				state.isLoading = true;
 				console.log("Pending");
 			})
 			.addCase(fetchAsyncMovies.fulfilled, (state, { payload }) => {
 				console.log("Fetched Successfully!");
+				state.isLoading = false;
 				state.movies = payload;
 			})
 			.addCase(fetchAsyncMovies.rejected, () => {
